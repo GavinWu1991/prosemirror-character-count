@@ -1,0 +1,39 @@
+{
+  "name": "prosemirror-character-count",
+  "version": "1.0.0",
+  "description": "ProseMirror plugin to counting the characters in the editor",
+  "keywords": [
+    "ProseMirror",
+    "Plugin",
+    "Character Count"
+  ],
+  "author": "GavinWu <wghusw@163.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/GavinWu1991/prosemirror-character-count/issues"
+  },
+  "homepage": "https://github.com/GavinWu1991/prosemirror-character-count",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GavinWu1991/prosemirror-character-count.git"
+  },
+  "main": "dist/index.js",
+  "module": "dist/index.es.js",
+  "peerDependencies": {
+    "prosemirror-state": "^1.2.2",
+    "prosemirror-view": "^1.4.2"
+  },
+  "devDependencies": {
+    "babel": "^6.23.0",
+    "babel-core": "^6.26.0",
+    "babel-plugin-external-helpers": "^6.22.0",
+    "babel-preset-es2015": "^6.24.1",
+    "husky": "^1.3.1",
+    "prettier": "1.15.3",
+    "pretty-quick": "^1.10.0",
+    "rollup": "^0.50.1",
+    "rollup-plugin-babel": "^3.0.2",
+    "prosemirror-state": "^1.2.2",
+    "prosemirror-view": "^1.4.2"
+  }
+}
