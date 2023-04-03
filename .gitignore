@@ -3,3 +3,7 @@
 
 # ignore install packages
 /node_modules
+/example/node_modules
+
+# ignore example build folder
+/example/dist/
