@@ -4,12 +4,18 @@ import { Schema, DOMParser } from "prosemirror-model";
 import { exampleSetup } from "prosemirror-example-setup";
 import { schema as basicSchema } from "prosemirror-schema-basic";
 
-var schema = new Schema({
+declare global {
+    interface Window {
+        view: EditorView;
+    }
+}
+
+const schema = new Schema({
     nodes: basicSchema.spec.nodes,
     marks: basicSchema.spec.marks
 });
 
-var plugins = exampleSetup({ schema: schema });
+const plugins = exampleSetup({ schema: schema });
 
 window.view = new EditorView(document.querySelector("#editor"), {
     state: EditorState.create({
