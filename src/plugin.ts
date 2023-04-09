@@ -1,5 +1,5 @@
-import {EditorState, EditorStateConfig, Plugin, PluginKey} from "prosemirror-state";
-import {Node} from "prosemirror-model"
+import {Plugin, PluginKey} from "prosemirror-state";
+import {Node} from "prosemirror-model";
 
 export interface CharacterCountOptions {
     /**
@@ -12,75 +12,65 @@ export interface CharacterCountOptions {
     mode: 'textSize' | 'nodeSize'
 }
 
-export interface CharacterCountStorage {
-    /**
-     * Get the number of characters for the current document.
-     */
-    characters: (options?: { node?: Node; mode?: 'textSize' | 'nodeSize' }) => number
-
-    /**
-     * Get the number of words for the current document.
-     */
-    words: (options?: { node?: Node }) => number
-}
-
 export class CharacterCountPlugin {
-    storage: CharacterCountStorage;
 
-    addOptions() {
+    readonly options: CharacterCountOptions;
+
+    constructor(options: CharacterCountOptions) {
+        this.options = options;
+    }
+
+    addOptions(): CharacterCountOptions {
         return {
             limit: null,
             mode: 'textSize',
         }
     }
 
-    addStorage() {
+    initStorage() {
         return {
-            characters: () => 0,
-            words: () => 0,
+            characters: 0,
+            words: 0,
         }
     }
 
-    onBeforeCreate() {
-        this.storage.characters = options => {
-            const node = options?.node || this.editor.state.doc
-            const mode = options?.mode || this.options.mode
+    characters(node: Node) {
+        const mode = this.options.mode;
 
-            if (mode === 'textSize') {
-                const text = node.textBetween(0, node.content.size, undefined, ' ')
+        if (mode === 'textSize') {
+            const text = node.textBetween(0, node.content.size, undefined, ' ')
 
-                return text.length
-            }
-
-            return node.nodeSize
+            return text.length
         }
 
-        this.storage.words = options => {
-            const node = options?.node || this.editor.state.doc
-            const text = node.textBetween(0, node.content.size, ' ', ' ')
-            const words = text.split(' ').filter(word => word !== '')
-
-            return words.length
-        }
+        return node.nodeSize
     }
+
+    words(node: Node) {
+        const text: string = node.textBetween(0, node.content.size, ' ', ' ')
+        const words = text.split(' ').filter(word => word !== '')
+
+        return words.length
+    }
+
 }
 
-export function characterCount() {
+export function characterCount(options: CharacterCountOptions, editor: any) {
 
-    const plugin = new CharacterCountPlugin();
+    const plugin = new CharacterCountPlugin(options);
 
     return new Plugin({
         key: new PluginKey('characterCount'),
         filterTransaction: (transaction, state) => {
-            const limit = this.options.limit
+            const limit = plugin.options.limit
 
             // Nothing has changed or no limit is defined. Ignore it.
             if (!transaction.docChanged || limit === 0 || limit === null || limit === undefined) {
                 return true
             }
 
-            const oldSize = plugin.storage.characters({node: state.doc})
-            const newSize = plugin.storage.characters({node: transaction.doc})
+            const oldSize = plugin.characters(state.doc)
+            const newSize = plugin.characters(transaction.doc)
 
             // Everything is in the limit. Good.
             if (newSize <= limit) {
@@ -118,13 +108,37 @@ export function characterCount() {
             // This happens e.g. when truncating within a complex node (e.g. table)
             // and ProseMirror has to close this node again.
             // If this is the case, we prevent the transaction completely.
-            const updatedSize = plugin.storage.characters({node: transaction.doc})
+            const updatedSize = plugin.characters(transaction.doc)
 
-            if (updatedSize > limit) {
-                return false
-            }
+            return updatedSize <= limit;
+        },
+        state: {
+            /**
+             * Initialize the plugin's internal state.
+             *
+             * @returns {Object}
+             */
+            init() {
+                return plugin.initStorage();
+            },
 
-            return true
-        }
+            /**
+             * Apply changes to the plugin state from a view transaction.
+             *
+             * @param {Transaction} tr
+             * @param {Object} prev
+             *
+             * @returns {Object}
+             */
+            apply(tr, prev) {
+                const {selection} = tr;
+                const node = tr.doc;
+
+                const next =
+                    {...prev, characters: plugin.characters(node), words: plugin.words(node)};
+
+                return next;
+            },
+        },
     });
 }
