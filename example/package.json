@@ -1,0 +1,43 @@
+{
+  "name": "prosemirror-character-count-example",
+  "version": "1.0.0",
+  "description": "Example for the ProseMirror plugin to counting the characters in the editor",
+  "keywords": [
+    "ProseMirror",
+    "Plugin",
+    "Character Count"
+  ],
+  "author": "GavinWu <wghusw@163.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/GavinWu1991/prosemirror-character-count/issues"
+  },
+  "homepage": "https://github.com/GavinWu1991/prosemirror-character-count",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GavinWu1991/prosemirror-character-count.git"
+  },
+  "main": "dist/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack --config webpack.config.js",
+    "dev": "webpack --config webpack.config.js --watch"
+  },
+  "dependencies": {
+    "prosemirror": "^0.11.1",
+    "prosemirror-example-setup": "^1.0.1",
+    "prosemirror-markdown": "^1.1.1",
+    "prosemirror-model": "^1.6.1",
+    "prosemirror-schema-basic": "^1.0.0",
+    "prosemirror-schema-list": "^1.0.1",
+    "prosemirror-state": "^1.2.2",
+    "prosemirror-view": "^1.5.3"
+  },
+  "devDependencies": {
+    "copy-webpack-plugin": "^11.0.0",
+    "ts-loader": "^9.4.2",
+    "typescript": "^5.0.3",
+    "webpack-cli": "^5.0.1",
+    "webpack-dev-server": "^3.1.9"
+  }
+}

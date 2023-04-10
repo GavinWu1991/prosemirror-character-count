@@ -1,0 +1,10 @@
+# ignore idea settings
+/.idea
+
+# ignore install packages
+/node_modules
+/example/node_modules
+
+# ignore example build folder
+/example/dist
+/dist
