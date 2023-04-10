@@ -19,6 +19,12 @@
   },
   "main": "dist/index.js",
   "module": "dist/index.es.js",
+  "types": "dist/index.d.ts",
+  "typings": "dist/index.d.ts",
+  "scripts": {
+    "lint": "eslint --ext .ts src/",
+    "build": "tsc --project ."
+  },
   "peerDependencies": {
     "prosemirror-state": "^1.2.2",
     "prosemirror-view": "^1.4.2"
