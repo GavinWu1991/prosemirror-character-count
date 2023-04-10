@@ -1,1 +1,1 @@
-export {CharacterCountOptions, CharacterCountPlugin, characterCountPlugin} from "./plugin"
+export { type CharacterCountOptions, CharacterCountPlugin, characterCountPlugin } from './plugin'
