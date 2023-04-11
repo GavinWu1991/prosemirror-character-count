@@ -24,20 +24,19 @@
     "dev": "webpack --config webpack.config.js --watch"
   },
   "dependencies": {
-    "prosemirror": "^0.11.1",
-    "prosemirror-example-setup": "^1.0.1",
-    "prosemirror-markdown": "^1.1.1",
-    "prosemirror-model": "^1.6.1",
-    "prosemirror-schema-basic": "^1.0.0",
-    "prosemirror-schema-list": "^1.0.1",
-    "prosemirror-state": "^1.2.2",
-    "prosemirror-view": "^1.5.3"
+    "prosemirror-example-setup": "^1.2.1",
+    "prosemirror-markdown": "^1.10.1",
+    "prosemirror-state": "^1.4.2",
+    "prosemirror-model": "^1.19.0",
+    "prosemirror-schema-basic": "^1.2.1",
+    "prosemirror-schema-list": "^1.2.2",
+    "prosemirror-view": "^1.30.2"
   },
   "devDependencies": {
     "copy-webpack-plugin": "^11.0.0",
     "ts-loader": "^9.4.2",
-    "typescript": "^5.0.3",
+    "typescript": "^5.0.4",
     "webpack-cli": "^5.0.1",
-    "webpack-dev-server": "^3.1.9"
+    "webpack-dev-server": "^3.11.3"
   }
 }
